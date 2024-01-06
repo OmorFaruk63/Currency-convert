@@ -3,32 +3,38 @@ import "./CurrencyConverter.css";
 import Hook from "../hook/hook";
 
 const CurrencyConverter = () => {
-  const [from, setFrom] = useState("BDT");
-  const data = Hook(from.toLocaleLowerCase());
-  const [currency, setCurrency] = useState("");
+  const [from, setFrom] = useState("bdt");
+  const { data } = Hook(from.toLocaleLowerCase());
+  const [currency, setCurrency] = useState();
   const [amount, setAmount] = useState(0);
-  const [to, setTo] = useState("USD");
-  const currencyArray = data.bdt ? Object?.keys(data.bdt) : [];
-  function convertCurrency() {}
+  const [to, setTo] = useState("usd");
+  const currencyArray = data[from] ? Object?.keys(data[from]) : [];
+
+  function convertCurrency() {
+    setCurrency(amount * data[from][to]);
+  }
+
+  console.log("render");
+
   return (
     <div className="Currency-Converter">
       <h2>Currency Converter App</h2>
-      <h1>{"$00"}</h1>
+      <h1>${currency ? currency : "00"}</h1>
       <div>
         <label>
           Amount:
           <input
             type="number"
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={(e) => setAmount(Number(e.target.value))}
           />
         </label>
         <label>
           From Currency:
           <select value={from} onChange={(e) => setFrom(e.target.value)}>
-            {currencyArray.slice(3, -1)?.map((currency) => (
+            {currencyArray?.slice(3, -1)?.map((currency) => (
               <option key={currency} value={currency}>
-                {currency}
+                {currency.toUpperCase()}
               </option>
             ))}
           </select>
@@ -38,7 +44,7 @@ const CurrencyConverter = () => {
           <select value={to} onChange={(e) => setTo(e.target.value)}>
             {currencyArray?.slice(3, -1)?.map((currency) => (
               <option key={currency} value={currency}>
-                {currency}
+                {currency.toUpperCase()}
               </option>
             ))}
           </select>

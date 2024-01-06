@@ -10,7 +10,7 @@ const Hook = (name = "bdt") => {
       `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${name}.json`
     )
       .then((res) => {
-        setData(res);
+        setData(res.data);
         setLoading(false);
       })
       .catch((err) => {
