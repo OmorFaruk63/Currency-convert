@@ -1,25 +1,26 @@
 import { useState } from "react";
 import "./CurrencyConverter.css";
 import Hook from "../hook/hook";
+import Loading from "../Loading/Loading";
 
 const CurrencyConverter = () => {
   const [from, setFrom] = useState("bdt");
-  const { data } = Hook(from.toLocaleLowerCase());
+  const { data, error, loading } = Hook(from.toLocaleLowerCase());
   const [currency, setCurrency] = useState();
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(null);
   const [to, setTo] = useState("usd");
   const currencyArray = data[from] ? Object?.keys(data[from]) : [];
 
   function convertCurrency() {
     setCurrency(amount * data[from][to]);
   }
-
-  console.log("render");
-
+  if (loading) {
+    <Loading />;
+  }
   return (
     <div className="Currency-Converter">
       <h2>Currency Converter App</h2>
-      <h1>${currency ? currency : "00"}</h1>
+      <h1>${currency ? currency?.toFixed(2) : "00"}</h1>
       <div>
         <label>
           Amount:
