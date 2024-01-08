@@ -6,7 +6,7 @@ import { MdOutlineSwapVert } from "react-icons/md";
 const CurrencyConverter = () => {
   const [from, setFrom] = useState("bdt");
   const { data, loading } = Hook(from.toLocaleLowerCase());
-  console.log(data);
+
   const [currency, setCurrency] = useState();
   const [amount, setAmount] = useState();
   const [to, setTo] = useState("usd");
@@ -23,7 +23,9 @@ const CurrencyConverter = () => {
   return (
     <div className="Currency-Converter">
       <h2>Currency Converter App</h2>
-      <h1>${currency ? currency?.toFixed(2) : "00"}</h1>
+      <div className="animation"></div>
+      <h1>${currency ? currency?.toFixed(2) : "00"} </h1>
+      <span>Currancy Update: {data?.date}</span>
       <div>
         <label>
           Amount:
