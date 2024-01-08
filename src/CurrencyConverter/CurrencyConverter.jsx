@@ -2,21 +2,24 @@ import { useState } from "react";
 import "./CurrencyConverter.css";
 import Hook from "../hook/hook";
 import Loading from "../Loading/Loading";
-
+import { MdOutlineSwapVert } from "react-icons/md";
 const CurrencyConverter = () => {
   const [from, setFrom] = useState("bdt");
-  const { data, error, loading } = Hook(from.toLocaleLowerCase());
+  const { data, loading } = Hook(from.toLocaleLowerCase());
+  console.log(data);
   const [currency, setCurrency] = useState();
-  const [amount, setAmount] = useState(null);
+  const [amount, setAmount] = useState();
   const [to, setTo] = useState("usd");
   const currencyArray = data[from] ? Object?.keys(data[from]) : [];
 
   function convertCurrency() {
     setCurrency(amount * data[from][to]);
   }
+
   if (loading) {
-    <Loading />;
+    return <Loading />;
   }
+
   return (
     <div className="Currency-Converter">
       <h2>Currency Converter App</h2>
@@ -40,6 +43,11 @@ const CurrencyConverter = () => {
             ))}
           </select>
         </label>
+
+        <span onClick={()=>{
+          setFrom(to)
+          setTo(from)
+        }} className="swap"><MdOutlineSwapVert /></span>
         <label>
           To Currency:
           <select value={to} onChange={(e) => setTo(e.target.value)}>

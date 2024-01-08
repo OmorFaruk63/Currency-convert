@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import NetworkErrorPage from "../NetworkErrorPage/NetworkErrorPage";
 
 const Hook = (name = "bdt") => {
   const [data, setData] = useState({});
@@ -14,8 +15,9 @@ const Hook = (name = "bdt") => {
         setLoading(false);
       })
       .catch((err) => {
-        setError(err);
         setLoading(false);
+        setError(err);
+        <NetworkErrorPage />;
       });
   }, [name]);
 
